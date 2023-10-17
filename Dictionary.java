@@ -2,16 +2,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Dictionary {
-    private List<Word> dictionary;
+    protected List<Word> dictionary;
+
     public Dictionary() {
-        dictionary = new ArrayList<Word>();
+        dictionary = new ArrayList<>();
     }
+
     public void addWord(Word newWord) {
         dictionary.add(newWord);
     }
-    public void print() {
-        for (Word i : dictionary) {
-            System.out.println(i.getWord_target() + " : " + i.getWord_explain());
+
+    public void removeWord(String wordTarget) {
+        for (int i = 0; i < dictionary.size(); i++) {
+            if (dictionary.get(i).getWordTarget().equals(wordTarget)) {
+                dictionary.remove(i);
+            }
         }
+    }
+
+    public void editWord(String wordTarget, String wordExplain) {
+        for (Word word : dictionary) {
+            if (word.getWordTarget().equals(wordTarget)) {
+                word.setWordExplain(wordExplain);
+            }
+        }
+    }
+
+    public String getExplain(String wordTarget) {
+        String wordExplain = new String();
+        for (Word word : dictionary) {
+            if (word.getWordTarget().equals(wordTarget)) {
+                wordExplain = word.getWordExplain();
+                break;
+            }
+        }
+        if (wordExplain == null) {
+            return "!";
+        }
+        return wordExplain;
+    }
+
+    public int getSize() {
+        return dictionary.size();
+    }
+
+    public Word getWord(int index) {
+        return dictionary.get(index);
     }
 }

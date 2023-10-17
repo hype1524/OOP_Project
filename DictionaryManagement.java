@@ -47,7 +47,7 @@ public class DictionaryManagement extends Dictionary {
     public void insertFromFile(String filePath) {
         FileInputStream fileInputStream = null;
         try {
-            fileInputStream = new FileInputStream("C:\\Users\\Laptop\\IdeaProjects\\ProjectOOPJavaFX\\dictionaries.txt");
+            fileInputStream = new FileInputStream("C:\\Users\\Laptop\\IdeaProjects\\ProjectOOP\\dictionaries.txt");
             //"C:\\Users\\Laptop\\IdeaProjects\\ProjectOOPJavaFX\\dictionaries.txt"
             Scanner scanner = new Scanner(new BufferedInputStream(fileInputStream));
             while (scanner.hasNext()) {
