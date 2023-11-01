@@ -114,7 +114,7 @@ public class QueryDatabaseAndTranslate {
                 "VI");
 
         // TODO: Set your API-Key from https://console.developers.google.com/
-        list.setKey("AIzaSyBlVORDZnQ4enZk-KJ5xuVF2wx5rk-lcK0");
+        list.setKey("myAPIKey");
         TranslationsListResponse translationsListResponse = list.execute();
         return translationsListResponse
                 .getTranslations().get(0).getTranslatedText();
