@@ -1,52 +1,56 @@
-import java.util.ArrayList;
-import java.util.List;
+import com.example.oopproject.Entity.MyString;
+import com.example.oopproject.MainController.DictionaryController;
+import com.example.oopproject.Query.BaseWord;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
-public class Dictionary {
-    protected List<Word> dictionary;
+import java.io.IOException;
 
-    public Dictionary() {
-        dictionary = new ArrayList<>();
+public class Dictionary extends Application {
+    public static Stage window;
+    public static Stage children;
+
+    @Override
+    public void start(Stage stage) throws IOException {
+
+        window = stage;
+        showScene(window, "login.fxml");
     }
 
-    public void addWord(Word newWord) {
-        dictionary.add(newWord);
-    }
+    public static void main(String[] args) {
 
-    public void removeWord(String wordTarget) {
-        for (int i = 0; i < dictionary.size(); i++) {
-            if (dictionary.get(i).getWordTarget().equals(wordTarget)) {
-                dictionary.remove(i);
+        Thread a = new Thread(() -> {
+            for (MyString word : BaseWord.getAllWord()) {
+                DictionaryController.addWord(word);
             }
-        }
+        });
+        a.start();
+        launch();
     }
 
-    public void editWord(String wordTarget, String wordExplain) {
-        for (Word word : dictionary) {
-            if (word.getWordTarget().equals(wordTarget)) {
-                word.setWordExplain(wordExplain);
-            }
-        }
+    public static void showScene(Stage stage, String sceneFile) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Dictionary.class.getResource(sceneFile));
+        Scene scene = new Scene(fxmlLoader.load(), 900, 600);
+
+        stage.setTitle("Dictionary");
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public String getExplain(String wordTarget) {
-        String wordExplain = new String();
-        for (Word word : dictionary) {
-            if (word.getWordTarget().equals(wordTarget)) {
-                wordExplain = word.getWordExplain();
-                break;
-            }
-        }
-        if (wordExplain == null) {
-            return "!";
-        }
-        return wordExplain;
-    }
+    public static void newStage(String sceneFile) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Dictionary.class.getResource(sceneFile));
+        Scene scene = new Scene(fxmlLoader.load(), 300, 400);
+        Stage newWindow = new Stage();
+        newWindow.setTitle("Dictionary");
+        newWindow.setScene(scene);
 
-    public int getSize() {
-        return dictionary.size();
-    }
+        newWindow.initOwner(window);
+        newWindow.initModality(Modality.WINDOW_MODAL);
 
-    public Word getWord(int index) {
-        return dictionary.get(index);
+        newWindow.show();
+        children = newWindow;
     }
 }
